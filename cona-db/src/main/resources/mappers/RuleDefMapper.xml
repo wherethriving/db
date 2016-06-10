@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="scopa.cona.database.mappers.RuleDefMapper">
+
+    <insert id="insertRuleDef" parameterType="RuleDef" useGeneratedKeys="true" keyProperty="ruleDefId">
+        insert into rule_def(rule_name, rule_type,
+                    description, param,
+                    annotation)
+                    values (#{ruleName}, #{ruleType},
+                          #{description}, #{param},
+                          #{annotation})
+    </insert>
+
+    <delete id="deleteRuleDef" parameterType="int">
+        DELETE FROM rule_def WHERE rule_def_id = #{ruleDefId}
+    </delete>
+
+    <update id="updateRuleDef" parameterType="RuleDef">
+        UPDATE rule_def
+        SET
+        rule_name = #{ruleName},
+        rule_type = #{ruleType},
+        description = #{description},
+        param = #{param},
+        annotation = #{annotation}
+        WHERE rule_def_id = #{ruleDefId}
+    </update>
+
+
+    <select id="selectRuleDefById" parameterType="int" resultType="RuleDef">
+        select rule_def_id as ruleDefId, rule_name as ruleName,
+              rule_type as ruleType, description as description,
+              param as param, annotation as annotation
+            from rule_def where rule_def_id = #{ruleDefId}
+    </select>
+
+</mapper>

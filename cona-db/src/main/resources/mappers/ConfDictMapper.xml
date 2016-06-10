@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="scopa.cona.database.mappers.ConfDictMapper">
+
+
+    <insert id="insertConfDict" parameterType="ConfDict" useGeneratedKeys="true" keyProperty="confDictId">
+        insert into conf_dict(name_en, name_cn,
+                              is_type, description)
+             values (#{nameEn}, #{nameCn},
+                     #{isType}, #{description})
+    </insert>
+
+    <delete id="deleteConfDict" parameterType="int">
+        DELETE FROM conf_dict WHERE conf_dict_id = #{confDictId}
+    </delete>
+
+    <update id="updateConfDict" parameterType="ConfDict">
+        UPDATE conf_dict
+        SET
+        name_en = #{nameEn},
+        name_cn = #{nameCn},
+        is_type = #{isType},
+        description = #{description}
+        WHERE conf_dict_id = #{confDictId}
+    </update>
+
+
+    <select id="selectConfDictById" parameterType="int" resultType="ConfDict">
+        select conf_dict_id as confDictId, name_en as nameEn,
+              name_cn as nameCn, is_type as isType,
+              description as description
+              from conf_dict where conf_dict_id = #{confDictId}
+    </select>
+
+
+</mapper>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+       xmlns:cxf="http://cxf.apache.org/core"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd
+        http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+    <context:component-scan base-package="scopa.cona.restful" />
+
+    <bean id="JacksonJsonProvider" class="com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider"/>
+    <bean id="ServiceExceptionMapper" class="scopa.cona.exception.ServiceExceptionMapper"/>
+    <bean id="CorsFilterProvider" class="org.apache.cxf.rs.security.cors.CrossOriginResourceSharingFilter"/>
+
+
+    <jaxrs:server id="conaWebServer" address="/v1/">
+        <jaxrs:serviceBeans>
+            <ref bean="attrConfServices"/>
+            <ref bean="confDictElementServices"/>
+            <ref bean="confDictServices"/>
+            <ref bean="confDictElementServices"/>
+            <ref bean="dataDictElementServices"/>
+            <ref bean="dataDictServices"/>
+            <ref bean="dataSourceInfoServices"/>
+            <ref bean="dataSourceServices"/>
+            <ref bean="originAttrServices"/>
+            <ref bean="originTableServices"/>
+            <ref bean="otAttrMappingServices"/>
+            <ref bean="otTableMappingServices"/>
+            <ref bean="ruleDefServices"/>
+            <ref bean="ruleMappingServices"/>
+            <ref bean="targetAttrServices"/>
+            <ref bean="targetTableServices"/>
+            <ref bean="tAttrNAttrConfServices"/>
+        </jaxrs:serviceBeans>
+        <jaxrs:extensionMappings>
+            <entry key="json" value="application/json"/>
+        </jaxrs:extensionMappings>
+        <jaxrs:features>
+            <cxf:logging/>
+        </jaxrs:features>
+        <jaxrs:providers>
+            <ref bean="JacksonJsonProvider"/>
+            <ref bean="ServiceExceptionMapper"/>
+            <ref bean="CorsFilterProvider" />
+        </jaxrs:providers>
+    </jaxrs:server>
+
+
+
+</beans>

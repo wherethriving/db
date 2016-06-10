@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="scopa.cona.database.mappers.OTAttrMappingMapper">
+
+
+    <insert id="insertOTAttrMapping" parameterType="OTAttrMapping" useGeneratedKeys="true" keyProperty="attrMappingId">
+        insert into o_t_attr_mapping(origin_attr_id, target_attr_id)
+              values (#{originAttrId}, #{targetAttrId})
+    </insert>
+
+    <delete id="deleteOTAttrMapping" parameterType="int">
+        DELETE FROM o_t_attr_mapping WHERE attr_mapping_id = #{attrMappingId}
+    </delete>
+
+    <update id="updateOTAttrMapping" parameterType="OTAttrMapping">
+        UPDATE o_t_attr_mapping
+        SET
+        origin_attr_id = #{originAttrId},
+        target_attr_id = #{targetAttrId}
+        WHERE attr_mapping_id = #{attrMappingId}
+    </update>
+
+
+    <select id="selectOTAttrMappingById" parameterType="int" resultType="OTAttrMapping">
+        select attr_mapping_id as attrMappingId,  origin_attr_id as originAttrId,
+                target_attr_id as targetAttrId
+          from o_t_attr_mapping where attr_mapping_id = #{attrMappingId}
+    </select>
+
+    <select id="selectOTAttrMappingByTAttrId" resultType="OTAttrMapping">
+        select attr_mapping_id as attrMappingId,  origin_attr_id as originAttrId,
+        target_attr_id as targetAttrId
+        from o_t_attr_mapping where target_attr_id in
+        <foreach collection="list" item="targetAttrId"
+                 open="(" separator="," close=")">
+            #{targetAttrId}
+        </foreach>
+    </select>
+
+    <select id="selectOTAttrMappingByOAttrId" resultType="OTAttrMapping">
+        select attr_mapping_id as attrMappingId,  origin_attr_id as originAttrId,
+        target_attr_id as targetAttrId
+        from o_t_attr_mapping where origin_attr_id in
+        <foreach collection="list" item="originAttrIds"
+                 open="(" separator="," close=")">
+            #{originAttrIds}
+        </foreach>
+    </select>
+
+
+</mapper>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="scopa.cona.database.mappers.RuleMappingMapper">
+
+
+    <insert id="insertRuleMapping" parameterType="RuleMapping" useGeneratedKeys="true" keyProperty="ruleMappingId">
+        insert into rule_mapping(attr_mapping_id, rule_def_id,
+                  param_value, rule_order )
+                  values (#{attrMappingId}, #{ruleDefId},
+                        #{paramValue}, #{ruleOrder})
+    </insert>
+
+    <delete id="deleteRuleMapping" parameterType="int">
+        DELETE FROM rule_mapping WHERE rule_mapping_id = #{ruleMappingId}
+    </delete>
+
+    <update id="updateRuleMapping" parameterType="RuleMapping">
+        UPDATE rule_mapping
+        SET
+        attr_mapping_id = #{attrMappingId},
+        rule_def_id = #{ruleDefId},
+        param_value = #{paramValue},
+        rule_order = #{ruleOrder}
+        WHERE rule_mapping_id = #{ruleMappingId}
+    </update>
+
+
+    <select id="selectRuleMappingById" parameterType="int" resultType="RuleMapping">
+        select rule_mapping_id as ruleMappingId, attr_mapping_id as attrMappingId,
+              rule_def_id as ruleDefId, param_value as paramValue,
+              rule_order as ruleOrder
+          from rule_mapping where rule_mapping_id = #{ruleMappingId}
+    </select>
+
+    <select id="selectRuleMappingByAttrMappingId" resultType="RuleMapping">
+        select rule_mapping_id as ruleMappingId, attr_mapping_id as attrMappingId,
+        rule_def_id as ruleDefId, param_value as paramValue,
+        rule_order as ruleOrder
+        from rule_mapping where attr_mapping_id in
+        <foreach collection="list" item="attrMappingIds"
+                 open="(" separator="," close=")">
+            #{attrMappingIds}
+        </foreach>
+    </select>
+</mapper>

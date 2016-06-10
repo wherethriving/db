@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="scopa.cona.database.mappers.DataSourceInfoMapper">
+
+
+    <insert id="insertDataSourceInfo" parameterType="DataSourceInfo" useGeneratedKeys="true" keyProperty="dataSourceInfoId">
+        insert into data_source_info(data_source_id, source_info_name,
+                                      url, username,
+                                      password, owner, schema_split,
+                                      schema_input)
+                values (#{dataSourceId}, #{sourceInfoName},
+                        #{url}, #{username},
+                        #{password}, #{owner},
+                        #{schemaSplit}, #{schemaInput})
+    </insert>
+
+    <delete id="deleteDataSourceInfo" parameterType="int">
+        DELETE FROM data_source_info WHERE data_source_info_id = #{dataSourceInfoId}
+    </delete>
+
+    <update id="updateDataSourceInfo" parameterType="DataSourceInfo">
+        UPDATE data_source_info
+        SET
+        data_source_id = #{dataSourceId},
+        source_info_name = #{sourceInfoName},
+        url = #{url},
+        username = #{username},
+        password = #{password},
+        owner = #{owner},
+        schema_split = #{schemaSplit},
+        schema_input = #{schemaInput}
+        WHERE data_source_info_id = #{dataSourceInfoId}
+    </update>
+
+
+    <select id="selectDataSourceInfoById" parameterType="int" resultType="DataSourceInfo">
+        select data_source_info_id as dataSourceInfoId, data_source_id as dataSourceId,
+              source_info_name as sourceInfoName,
+              url as url, username as username,
+              password as password, owner as owner,
+              schema_split as schemaSplit, schema_input as schemaInput
+              from data_source_info where data_source_info_id = #{dataSourceInfoId}
+    </select>
+
+    <select id="selectDataSourceInfoByUrl" parameterType="String" resultType="DataSourceInfo">
+        select data_source_info_id as dataSourceInfoId, data_source_id as dataSourceId,
+        source_info_name as sourceInfoName,
+        url as url, username as username,
+        password as password, owner as owner,
+        schema_split as schemaSplit, schema_input as schemaInput
+        from data_source_info where url = #{url}
+    </select>
+
+</mapper>

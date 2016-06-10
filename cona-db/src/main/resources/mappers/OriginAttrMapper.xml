@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="scopa.cona.database.mappers.OriginAttrMapper">
+
+    <insert id="insertOriginAttr" parameterType="OriginAttr" useGeneratedKeys="true" keyProperty="originAttrId">
+        insert into origin_attr(origin_table_id, attr_name,
+                    column_type, description, sample,
+                    row_order )
+                    values (#{originTableId}, #{attrName},
+                            #{columnType}, #{description}, #{sample},
+                            #{rowOrder})
+    </insert>
+
+    <delete id="deleteOriginAttr" parameterType="int">
+        DELETE FROM origin_attr WHERE origin_attr_id = #{originAttrId}
+    </delete>
+
+    <update id="updateOriginAttr" parameterType="OriginAttr">
+        UPDATE origin_attr
+        SET
+        origin_table_id = #{originTableId},
+        attr_name = #{attrName},
+        sample = #{sample},
+        column_type = #{columnType},
+        description = #{description},
+        row_order = #{rowOrder}
+        WHERE origin_attr_id = #{originAttrId}
+    </update>
+
+
+    <select id="selectOriginAttrById" parameterType="int" resultType="OriginAttr">
+        select origin_attr_id as originAttrId, origin_table_id as originTableId,
+              attr_name as attrName, sample as sample, column_type as columnType,
+              description as description, row_order as rowOrder
+            from origin_attr where origin_attr_id = #{originAttrId}
+    </select>
+
+    <select id="getOAttrByOTableName" resultType="OriginAttr">
+        select origin_attr_id as originAttrId, origin_table_id as originTableId,
+        attr_name as attrName, sample as sample, column_type as columnType,
+        description as description, row_order as rowOrder
+        from origin_attr where origin_table_id in
+          <foreach collection="list" item="originTableId"
+                   open="(" separator="," close=")">
+              #{originTableId}
+          </foreach>
+    </select>
+
+    <insert id="insertBatchOriginAttrs" parameterType="list" useGeneratedKeys="true">
+        <selectKey resultType="int" order="AFTER" keyProperty="originAttrId">
+            select LAST_INSERT_ID()
+        </selectKey>
+        insert into origin_attr(origin_table_id, attr_name,
+        sample, column_type, description,
+        row_order )
+        values
+        <foreach collection="list" item="originAttrs" index="index"
+                  separator=",">
+        (
+        #{originAttrs.originTableId}, #{originAttrs.attrName}, #{originAttrs.sample},
+        #{originAttrs.columnType}, #{originAttrs.description},
+        #{originAttrs.rowOrder}
+        )
+        </foreach>
+    </insert>
+
+
+</mapper>

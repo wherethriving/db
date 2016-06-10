@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="scopa.cona.database.mappers.OriginTableMapper">
+
+    <insert id="insertOriginTable" parameterType="OriginTable" useGeneratedKeys="true" keyProperty="originTableId">
+        insert into origin_table(data_source_info_id, tb_name_en, tb_name_cn,
+                    description, is_incremental, incre_col_name, incre_col_type)
+                  values (#{dataSourceInfoId}, #{tbNameEn}, #{tbNameCn},
+                    #{description}, #{isIncremental}, #{increColName}, #{increColType})
+    </insert>
+
+    <delete id="deleteOriginTable" parameterType="int">
+        DELETE FROM origin_table WHERE origin_table_id = #{originTableId}
+    </delete>
+
+    <update id="updateOriginTable" parameterType="OriginTable">
+        UPDATE origin_table
+        SET
+        data_source_info_id = #{dataSourceInfoId},
+        tb_name_en = #{tbNameEn},
+        tb_name_cn = #{tbNameCn},
+        description = #{description},
+        is_incremental = #{isIncremental},
+        incre_col_name = #{increColName},
+        incre_col_type = #{increColType}
+        WHERE origin_table_id = #{originTableId}
+    </update>
+
+
+    <select id="selectOriginTableById" parameterType="int" resultType="OriginTable">
+        select origin_table_id as originTableId, data_source_info_id as dataSourceInfoId,
+              tb_name_en as tbNameEn, tb_name_cn as tbNameCn, description as description,
+              is_incremental as isIncremental, incre_col_name as increColName,
+              incre_col_type as increColType
+        from origin_table where origin_table_id = #{originTableId}
+    </select>
+
+    <select id="selectOriginTableByName" parameterType="String" resultType="OriginTable">
+         select origin_table_id as originTableId, data_source_info_id as dataSourceInfoId,
+              tb_name_en as tbNameEn, tb_name_cn as tbNameCn, description as description,
+              is_incremental as isIncremental, incre_col_name as increColName,
+              incre_col_type as increColType
+         from origin_table where tb_name = #{originTableName}
+    </select>
+
+    <select id="selectOTableByDSInfoId" parameterType="int" resultType="OriginTable">
+        select origin_table_id as originTableId, data_source_info_id as dataSourceInfoId,
+            tb_name_en as tbNameEn, tb_name_cn as tbNameCn, description as description,
+            is_incremental as isIncremental, incre_col_name as increColName,
+            incre_col_type as increColType
+        from origin_table where data_source_info_id = #{dataSourceInfoId}
+    </select>
+
+</mapper>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="scopa.cona.database.mappers.ConfDictElementMapper">
+
+    <insert id="insertConfDictElement" parameterType="ConfDictElement" useGeneratedKeys="true" keyProperty="confDictElemId">
+        insert into conf_dict_element(conf_dict_id, elem_value,
+                                      description, is_default)
+              values (#{confDictId}, #{elemValue},
+                      #{description}, #{isDefault})
+    </insert>
+
+    <delete id="deleteConfDictElement" parameterType="int">
+        DELETE FROM conf_dict_element WHERE conf_dict_elem_id = #{confDictElementId}
+    </delete>
+
+    <update id="updateConfDictElement" parameterType="ConfDictElement">
+        UPDATE conf_dict_element
+        SET
+        conf_dict_id = #{confDictId},
+        elem_value = #{elemValue},
+        description = #{description},
+        is_default = #{isDefault}
+        WHERE conf_dict_elem_id = #{confDictElemId}
+    </update>
+
+
+    <select id="selectConfDictElementById" parameterType="int" resultType="ConfDictElement">
+        select conf_dict_elem_id as confDictElemId, conf_dict_id as confDictId,
+              elem_value as elemValue, description as description,
+              is_default as isDefault
+            from conf_dict_element where conf_dict_elem_id = #{confDictElemId}
+    </select>
+
+
+</mapper>

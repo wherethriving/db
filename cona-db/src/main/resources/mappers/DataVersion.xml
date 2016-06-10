@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="scopa.cona.database.mappers.DataVersionMapper">
+
+
+
+	<insert id="insertDataVersionProducer" parameterType="ProducerDataVersion" useGeneratedKeys="true" keyColumn="versionProducerId" keyProperty="id">
+		insert into data_version_produce(sourceId,tableId,completed,version,start,end,completedTime)
+		values (#{sourceId},#{tableId},#{completed},#{version},#{start},#{end},#{completedTime})
+	</insert>
+	<insert id="insertDataVersionConsumer" parameterType="ConsumerDataVersion"  useGeneratedKeys="true" keyProperty="id">
+		insert into data_version_consumer(consumerName,origId,versionProducerId,version,consumeredTime,consumered)
+		values (#{consumerName},#{origId},#{versionProducerId},#{version},#{consumeredTime},#{consumered})
+	</insert>
+
+	<update id="updateDataVersionProduce" parameterType="ProducerDataVersion">
+		UPDATE data_version_produce
+		SET
+		completed = #{completed},
+		version = #{version},
+		start = #{start},
+		end = #{end},
+		completedTime = #{completedTime}
+		WHERE versionProducerId = #{id}
+	</update>
+	<update id="updateDataVersionConsumer" parameterType="ConsumerDataVersion">
+		UPDATE data_version_consumer
+		SET
+		versionProducerId = #{versionProducerId},
+		version = #{version},
+		consumeredTime = #{consumeredTime},
+		consumered = #{consumered},
+		WHERE versionConsumerId = #{id}
+	</update>
+
+	<select id="selectDataVersionProduceById" parameterType="int" resultType="ProducerDataVersion">
+		select *  from data_version_produce where versionProducerId = #{id}
+	</select>
+	<select id="selectDataVersionProduceBySourceAndTable" parameterType="ProducerDataVersion" resultType="ProducerDataVersion">
+		select *  from data_version_produce where sourceId = #{sourceId} and tableId=#{tableId}
+		<if test="completed != null">
+			and completed = #{completed}
+		</if>
+		order by versionProducerId desc
+	</select>
+	<select id="selectDataVersionConsumerById" parameterType="int" resultType="ConsumerDataVersion">
+		select *  from data_version_consumer where versionConsumerId = #{id}
+	</select>
+	<select id="selectDataVersionConsumerByNameAndOrigId" parameterType="ConsumerDataVersion" resultType="ConsumerDataVersion">
+		select *  from data_version_consumer where origId = #{origId} and consumerName=#{consumerName}
+		<if test="consumered != null">
+			consumered = #{consumered}
+		</if>
+		order by versionConsumerId desc
+	</select>
+</mapper>

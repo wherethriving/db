@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="scopa.cona.database.mappers.CategoryMapper">
+
+
+
+	<insert id="insertCategory" parameterType="Category" useGeneratedKeys="true" keyProperty="categoryId">
+		insert into category(category_name) values (#{categoryName})
+	</insert>
+
+	<insert id="insertCategoryProduct" parameterType="map">
+		insert into category_product (category_id, product_id) values (#{categoryId}, #{productId})
+	</insert>
+
+	<delete id="deleteCategory" parameterType="int">
+		DELETE FROM category WHERE category_id =#{id}
+	</delete>
+
+	<update id="updateCategory" parameterType="Category">
+		UPDATE category
+		SET
+		category_name = #{categoryName}
+		WHERE category_id = #{categoryId}
+	</update>
+
+
+	<select id="selectCategoryById" parameterType="int" resultType="Category">
+		select category_id as categoryId, category_name as categoryName from Category where category_id = #{id}
+	</select>
+
+	<select id="selectCategoryDeepById" parameterType="int" resultMap="CategoryDetail">
+		select
+		c.category_id as categoryId,
+		c.category_name as categoryName,
+		p.product_id as productId,
+		p.product_name as productName
+		from Category c
+		left outer join category_product cp on c.category_id = cp.category_id
+		left outer join product p on cp.product_id = p.product_id
+		where c.category_id = #{id}
+	</select>
+
+
+	<select id="selectCategoryDeepById2" parameterType="int" resultMap="CategoryDetail2">
+		select
+		c.category_id as categoryId,
+		c.category_name as categoryName
+		from Category c
+		where c.category_id = #{id}
+	</select>
+
+
+	<resultMap type="Category" id="CategoryDetail">
+		<result property="categoryId" column="categoryId"/>
+		<result property="categoryName" column="categoryName"/>
+		<collection property="products" ofType="Product"  javaType="ArrayList" notNullColumn="categoryId">
+			<id property="productId" column="productId"/>
+			<result property="productName" column="productName"/>
+		</collection>
+
+	</resultMap>
+
+
+	<resultMap type="Category" id="CategoryDetail2">
+		<result property="categoryId" column="categoryId"/>
+		<result property="categoryName" column="categoryName"/>
+		<collection property="products" column="categoryId" ofType="Product"  javaType="ArrayList" select="selectProductByCategoryId"/>
+	</resultMap>
+
+	<select id="selectProductByCategoryId" parameterType="int" resultType="Product">
+		select
+		p.product_id as productId,
+		p.product_name as productName
+		from product p
+		left outer join category_product cp on p.product_id = cp.product_id
+		where cp.category_id = #{id}
+	</select>
+
+</mapper>

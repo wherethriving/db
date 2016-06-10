@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="scopa.cona.database.mappers.DataSourceMapper">
+
+
+    <insert id="insertDataSource" parameterType="DataSource" useGeneratedKeys="true" keyProperty="dataSourceId">
+        insert into data_source(source_name, sample_value) values (#{sourceName}, #{sampleValue})
+    </insert>
+
+    <delete id="deleteDataSource" parameterType="int">
+        DELETE FROM data_source WHERE data_source_id =#{dataSourceId}
+    </delete>
+
+    <update id="updateDataSource" parameterType="DataSource">
+        UPDATE data_source
+        SET
+        source_name = #{sourceName},
+        sample_value = #{sampleValue}
+        WHERE data_source_id = #{dataSourceId}
+    </update>
+
+
+    <select id="selectDataSourceById" parameterType="int" resultType="DataSource">
+        select data_source_id as dataSourceId, source_name as sourceName,
+              sample_value as sampleValue
+            from data_source where data_source_id = #{dataSourceId}
+    </select>
+
+</mapper>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="scopa.cona.database.mappers.TargetAttrMapper">
+
+    <insert id="insertTargetAttr" parameterType="TargetAttr" useGeneratedKeys="true" keyProperty="targetAttrId">
+        insert into target_attr(target_table_id, attr_name_en,
+                  attr_name_cn, sample,
+                  column_type, origin_tb_is_existed,
+                  description)
+                  values (#{targetTableId}, #{attrNameCn},
+                          #{attrNameEn}, #{sample},
+                          #{columnType}, #{originTbIsExisted},
+                          #{description})
+    </insert>
+
+    <delete id="deleteTargetAttr" parameterType="int">
+        DELETE FROM target_attr WHERE target_attr_id = #{targetAttrId}
+    </delete>
+
+    <update id="updateTargetAttr" parameterType="TargetAttr">
+        UPDATE target_attr
+        SET
+        target_table_id = #{targetTableId},
+        attr_name_en = #{attrNameCn},
+        attr_name_cn = #{attrNameEn},
+        sample = #{sample},
+        column_type = #{columnType},
+        origin_tb_is_existed = #{originTbIsExisted},
+        description = #{description}
+        WHERE target_attr_id = #{targetAttrId}
+    </update>
+
+
+    <select id="selectTargetAttrById" parameterType="int" resultType="TargetAttr">
+        select target_attr_id as targetAttrId, target_table_id as targetTableId,
+              attr_name_en as attrNameCn,
+              attr_name_cn as attrNameEn, sample as sample,
+              column_type as columnType, origin_tb_is_existed as originTbIsExisted,
+              description as description
+          from target_attr where target_attr_id = #{targetAttrId}
+    </select>
+
+    <select id="selectTargetAttrByTargetTableId" parameterType="int" resultType="TargetAttr">
+         select target_attr_id as targetAttrId, target_table_id as targetTableId,
+              attr_name_en as attrNameCn,
+              attr_name_cn as attrNameEn, sample as sample,
+              column_type as columnType, origin_tb_is_existed as originTbIsExisted,
+              description as description
+        from target_attr where target_table_id = #{targetTableId}
+    </select>
+
+    <select id="selectTargetAttrByTableIdAndAttrNameEn" parameterType="String" resultType="TargetAttr">
+        select target_attr_id as targetAttrId, target_table_id as targetTableId,
+            attr_name_en as attrNameCn,
+            attr_name_cn as attrNameEn, sample as sample,
+            column_type as columnType, origin_tb_is_existed as originTbIsExisted,
+            description as description
+        from target_attr where target_table_id = #{targetTableId} and attr_name_en = #{attrNameCn}
+    </select>
+
+</mapper>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="scopa.cona.database.mappers.OTTableMappingMapper">
+
+
+    <insert id="insertOTTableMapping" parameterType="OTTableMapping" useGeneratedKeys="true" keyProperty="tbMappingId">
+        insert into o_t_table_mapping(origin_table_id, target_table_id,
+                      tb_order)
+                      values (#{OriginTableId}, #{targetTableId},
+                        #{tbOrder})
+    </insert>
+
+    <delete id="deleteOTTableMapping" parameterType="int">
+        DELETE FROM o_t_table_mapping WHERE tb_mapping_id =#{tbMappingId}
+    </delete>
+
+    <update id="updateOTTableMapping" parameterType="OTTableMapping">
+        UPDATE o_t_table_mapping
+        SET
+        origin_table_id = #{OriginTableId},
+        target_table_id = #{targetTableId},
+        tb_order = #{tbOrder}
+        WHERE tb_mapping_id = #{tbMappingId}
+    </update>
+
+
+    <select id="selectOTTableMappingById" parameterType="int" resultType="OTTableMapping">
+        select tb_mapping_id as tbMappingId, origin_table_id as OriginTableId,
+              target_table_id as targetTableId, tb_order as tbOrder
+            from o_t_table_mapping where tb_mapping_id = #{tbMappingId}
+    </select>
+
+</mapper>

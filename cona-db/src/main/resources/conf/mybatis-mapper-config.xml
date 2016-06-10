@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias type="scopa.cona.database.model.ProducerDataVersion" alias="ProducerDataVersion"/>
+		<typeAlias type="scopa.cona.database.model.ConsumerDataVersion" alias="ConsumerDataVersion"/>
+		<typeAlias type="scopa.cona.database.model.AttrConf" alias="AttrConf"/>
+		<typeAlias type="scopa.cona.database.model.ConfDict" alias="ConfDict"/>
+		<typeAlias type="scopa.cona.database.model.Configuration" alias="Configuration"/>
+		<typeAlias type="scopa.cona.database.model.ConfDictElement" alias="ConfDictElement"/>
+		<typeAlias type="scopa.cona.database.model.DataDict" alias="DataDict"/>
+		<typeAlias type="scopa.cona.database.model.DataDictElement" alias="DataDictElement"/>
+		<typeAlias type="scopa.cona.database.model.DataSource" alias="DataSource"/>
+		<typeAlias type="scopa.cona.database.model.DataSourceInfo" alias="DataSourceInfo"/>
+		<typeAlias type="scopa.cona.database.model.OriginAttr" alias="OriginAttr"/>
+		<typeAlias type="scopa.cona.database.model.OriginTable" alias="OriginTable"/>
+		<typeAlias type="scopa.cona.database.model.OTAttrMapping" alias="OTAttrMapping"/>
+		<typeAlias type="scopa.cona.database.model.OTTableMapping" alias="OTTableMapping"/>
+		<typeAlias type="scopa.cona.database.model.RuleDef" alias="RuleDef"/>
+		<typeAlias type="scopa.cona.database.model.RuleMapping" alias="RuleMapping"/>
+		<typeAlias type="scopa.cona.database.model.TargetAttr" alias="TargetAttr"/>
+		<typeAlias type="scopa.cona.database.model.TargetTable" alias="TargetTable"/>
+		<typeAlias type="scopa.cona.database.model.TAttrNAttrConf" alias="TAttrNAttrConf"/>
+	</typeAliases>
+
+</configuration>

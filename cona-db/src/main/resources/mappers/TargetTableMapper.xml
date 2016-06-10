@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="scopa.cona.database.mappers.TargetTableMapper">
+
+
+    <insert id="insertTargetTable" parameterType="TargetTable" useGeneratedKeys="true" keyProperty="targetTableId">
+        insert into target_table(label_cn, label_en,
+                              element_type, description,
+                               version, tb_number)
+                  values (#{labelCn}, #{labelEn},
+                          #{elementType}, #{description},
+                          #{version}, #{tbNumber})
+    </insert>
+
+    <delete id="deleteTargetTable" parameterType="int">
+        DELETE FROM target_table WHERE target_table_id = #{targetTableId}
+    </delete>
+
+    <update id="updateTargetTable" parameterType="TargetTable">
+        UPDATE target_table
+        SET
+        label_cn = #{labelCn},
+        label_en = #{labelEn},
+        element_type = #{elementType},
+        description = #{description},
+        version = #{version},
+        tb_number = #{tbNumber}
+        WHERE target_table_id = #{targetTableId}
+    </update>
+
+
+    <select id="selectTargetTableById" parameterType="int" resultType="TargetTable">
+        select target_table_id as targetTableId, label_cn as labelCn, label_en as labelEn,
+               element_type as elementType, description as description,
+              version as version, tb_number as tbNumber
+            from target_table where target_table_id = #{targetTableId}
+    </select>
+
+    <select id="selectTargetTableByLabelEn" parameterType="String" resultType="TargetTable">
+        select target_table_id as targetTableId, label_cn as labelCn, label_en as labelEn,
+               element_type as elementType, description as description,
+              version as version, tb_number as tbNumber
+        from target_table where label_en = #{labelEn}
+    </select>
+
+    <select id="selectTargetTableByLabelEnElemTypeVersion" parameterType="String" resultType="TargetTable">
+        select target_table_id as targetTableId, label_cn as labelCn, label_en as labelEn,
+          element_type as elementType, description as description,
+          version as version, tb_number as tbNumber
+        from target_table where label_en = #{labelEn} and element_type = #{elementType} and version = #{version}
+    </select>
+
+</mapper>

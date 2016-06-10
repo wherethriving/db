@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="scopa.cona.database.mappers.TAttrNAttrConfMapper">
+
+
+
+    <insert id="insertTAttrNAttrConf" parameterType="TAttrNAttrConf" useGeneratedKeys="true" keyProperty="attrConfMappingId">
+        insert into t_attr_n_attr_conf(attr_conf_id, target_attr_id, conf_value)
+                  values (#{attrConfId}, #{targetAttrId}, #{confValue})
+    </insert>
+
+    <delete id="deleteTAttrNAttrConf" parameterType="int">
+        DELETE FROM t_attr_n_attr_conf WHERE attr_conf_mapping_id = #{attrConfMappingId}
+    </delete>
+
+    <update id="updateTAttrNAttrConf" parameterType="TAttrNAttrConf">
+        UPDATE t_attr_n_attr_conf
+        SET
+        attr_conf_id = #{attrConfId},
+        target_attr_id = #{targetAttrId},
+        conf_value = #{confValue}
+        WHERE attr_conf_mapping_id = #{attrConfMappingId}
+    </update>
+
+
+    <select id="selectTAttrNAttrConfById" parameterType="int" resultType="TAttrNAttrConf">
+        select attr_conf_id as attrConfId, target_attr_id as targetAttrId, conf_value as confValue
+            from t_attr_n_attr_conf where attr_conf_mapping_id = #{attrConfMappingId}
+    </select>
+
+</mapper>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="scopa.cona.database.mappers.DataDictElementMapper">
+
+    <insert id="insertDataDictElement" parameterType="DataDictElement" useGeneratedKeys="true" keyProperty="dataDictElementId">
+        insert into data_dict_element(data_dict_id, element_key, element_value)
+                values (#{dataDictId}, #{elementKey}, #{elementValue})
+    </insert>
+
+    <delete id="deleteDataDictElement" parameterType="int">
+        DELETE FROM data_dict_element WHERE data_dict_elem_id = #{dataDictElementId}
+    </delete>
+
+    <update id="updateDataDictElement" parameterType="DataDictElement">
+        UPDATE data_dict_element
+        SET
+        data_dict_id = #{dataDictId},
+        element_key = #{elementKey},
+        element_value = #{elementValue}
+        WHERE data_dict_elem_id = #{dataDictElementId}
+    </update>
+
+    <select id="selectDataDictElementfById" parameterType="int" resultType="DataDictElement">
+        select data_dict_elem_id as dataDictElementId, data_dict_id as dataDictId,
+              element_key as elementKey, element_value as elementValue
+            from data_dict_element where data_dict_elem_id = #{dataDictElementId}
+    </select>
+
+
+</mapper>
